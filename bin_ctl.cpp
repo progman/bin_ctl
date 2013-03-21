@@ -25,11 +25,11 @@ namespace global
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // view bytes in hex
-void view_val(const void* p, uint8_t size, bool flag_le)
+void view_val(const void *p, uint8_t size, bool flag_le)
 {
 	putchar('0');
 	putchar('x');
-	const uint8_t* pval = (const uint8_t*)p;
+	const uint8_t *pval = (const uint8_t *)p;
 
 	if (flag_le == true)
 	{
@@ -38,7 +38,7 @@ void view_val(const void* p, uint8_t size, bool flag_le)
 
 	for (uint8_t i=0; i < size; i++)
 	{
-		const char* p = lib_cpp::bin2hex(*pval);
+		const char *p = lib_cpp::bin2hex(*pval);
 
 		if (flag_le == true)
 		{
@@ -57,7 +57,7 @@ void view_val(const void* p, uint8_t size, bool flag_le)
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // get data
-int xget(const char *filename, void* p, uint8_t size)
+int xget(const char *filename, void *p, uint8_t size)
 {
 	if (lib_cpp::file_get(filename, global::offset, p, size) == -1)
 	{
@@ -69,7 +69,7 @@ int xget(const char *filename, void* p, uint8_t size)
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // set data
-int xset(const char *filename, const void* p, uint8_t size)
+int xset(const char *filename, const void *p, uint8_t size)
 {
 	if (lib_cpp::file_set(filename, global::offset, p, size) == -1)
 	{
@@ -242,7 +242,7 @@ void help()
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // general function
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	int rc;
 	bool flag_file = false;
@@ -251,7 +251,7 @@ int main(int argc, char* argv[])
 // set default convertion
 	global::flag_le = true;
 	uint16_t testendian = 0x0001;
-	if (*((uint8_t*) &testendian) == 0)
+	if (*((uint8_t *)&testendian) == 0)
 	{
 		global::flag_le = false;
 	}
