@@ -3,7 +3,7 @@ PROG_NAME=bin_ctl
 PROG_VERSION=0.0.1
 PROG_URL=https://github.com/progman/bin_ctl
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-CXX=gcc
+CXX=g++
 LN=g++
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 #-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
@@ -30,7 +30,7 @@ x32dbg: bin_ctl.cpp Makefile
 	@ln -sf $(PROG_NAME)-$(@)-$(PROG_VERSION) bin/$(PROG_NAME)
 	@objdump -Dslx bin/$(PROG_NAME)-$(@)-$(PROG_VERSION) > bin/$(PROG_NAME)-$(@)-$(PROG_VERSION).dump;
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-x32:    bin_ctl.cpp Makefile
+x32: bin_ctl.cpp Makefile
 	@if [ ! -e bin ]; then    (mkdir bin;)     fi
 
 	@$(CXX) bin_ctl.cpp -c -o bin/bin_ctl.o -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TARGET="$(@)"' -D'PROG_FULL_NAME="$(PROG_NAME)-$(@)-$(PROG_VERSION)"' -D'PROG_URL="$(PROG_URL)"' $(CFLAGS_x32REL)
@@ -47,7 +47,7 @@ x64dbg: bin_ctl.cpp Makefile
 	@ln -sf $(PROG_NAME)-$(@)-$(PROG_VERSION) bin/$(PROG_NAME)
 	@objdump -Dslx bin/$(PROG_NAME)-$(@)-$(PROG_VERSION) > bin/$(PROG_NAME)-$(@)-$(PROG_VERSION).dump;
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-x64:    bin_ctl.cpp Makefile
+x64: bin_ctl.cpp Makefile
 	@if [ ! -e bin ]; then    (mkdir bin;)     fi
 
 	@$(CXX) bin_ctl.cpp -c -o bin/bin_ctl.o -D'PROG_NAME="$(PROG_NAME)"' -D'PROG_VERSION="$(PROG_VERSION)"' -D'PROG_TARGET="$(@)"' -D'PROG_FULL_NAME="$(PROG_NAME)-$(@)-$(PROG_VERSION)"' -D'PROG_URL="$(PROG_URL)"' $(CFLAGS_x64REL)
