@@ -151,7 +151,7 @@ int do_stdinput()
 	int c;
 	uint64_t offset_cur = uint64_t(-1) - global::data_size + 1;
 	bool flag_ok = false;
-	uint8_t data[8];
+	uint8_t data[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
 	for (;;)
