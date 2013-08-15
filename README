@@ -1,7 +1,7 @@
 get and set u8/u16/u32/u64 in file or stdin
 
 
-1) Get this : git clone git://github.com/progman/bin_ctl
+1) Get this : git clone https://github.com/progman/bin_ctl
 2) Make this: git submodule init && git submodule update && make x64 && ./test.sh
 3) Use this : echo 'Hello' | bin_ctl -offset 0
 4) Enjoy!
