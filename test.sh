@@ -1,5 +1,24 @@
 #!/bin/bash
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+APP='./bin/bin_ctl';
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# run app
+function app_run()
+{
+	if [ "${FLAG_VALGRIND}" != "1" ];
+	then
+		echo -n $(${APP} ${@});
+	else
+		VAL="valgrind --tool=memcheck --leak-check=yes --leak-check=full --show-reachable=yes --log-file=valgrind.log";
+
+		echo -n $(${VAL} ${APP} ${@});
+
+		echo '--------------------------' >> valgrind.all.log;
+		cat valgrind.log >> valgrind.all.log;
+		rm -rf valgrind.log;
+	fi
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # test1
 function test1()
 {
@@ -11,19 +30,19 @@ function test1()
 # H  e  l  l  o     w  o  r  l  d  ! \n
 #48 65 6C 6C 6F 20 77 6F 72 6C 64 21 0A
 
-	./bin/bin_ctl -u8 -offset  0 -set  72 "${TMP}"; # 0x48 72
-	./bin/bin_ctl -u8 -offset  1 -set 101 "${TMP}"; # 0x65 101
-	./bin/bin_ctl -u8 -offset  2 -set 108 "${TMP}"; # 0x6C 108
-	./bin/bin_ctl -u8 -offset  3 -set 108 "${TMP}"; # 0x6C 108
-	./bin/bin_ctl -u8 -offset  4 -set 111 "${TMP}"; # 0x6F 111
-	./bin/bin_ctl -u8 -offset  5 -set  32 "${TMP}"; # 0x20 32
-	./bin/bin_ctl -u8 -offset  6 -set 119 "${TMP}"; # 0x77 119
-	./bin/bin_ctl -u8 -offset  7 -set 111 "${TMP}"; # 0x6F 111
-	./bin/bin_ctl -u8 -offset  8 -set 114 "${TMP}"; # 0x72 114
-	./bin/bin_ctl -u8 -offset  9 -set 108 "${TMP}"; # 0x6C 108
-	./bin/bin_ctl -u8 -offset 10 -set 100 "${TMP}"; # 0x64 100
-	./bin/bin_ctl -u8 -offset 11 -set  33 "${TMP}"; # 0x21 33
-	./bin/bin_ctl -u8 -offset 12 -set  10 "${TMP}"; # 0x0A 10
+	app_run -u8 -offset  0 -set  72 "${TMP}"; # 0x48 72
+	app_run -u8 -offset  1 -set 101 "${TMP}"; # 0x65 101
+	app_run -u8 -offset  2 -set 108 "${TMP}"; # 0x6C 108
+	app_run -u8 -offset  3 -set 108 "${TMP}"; # 0x6C 108
+	app_run -u8 -offset  4 -set 111 "${TMP}"; # 0x6F 111
+	app_run -u8 -offset  5 -set  32 "${TMP}"; # 0x20 32
+	app_run -u8 -offset  6 -set 119 "${TMP}"; # 0x77 119
+	app_run -u8 -offset  7 -set 111 "${TMP}"; # 0x6F 111
+	app_run -u8 -offset  8 -set 114 "${TMP}"; # 0x72 114
+	app_run -u8 -offset  9 -set 108 "${TMP}"; # 0x6C 108
+	app_run -u8 -offset 10 -set 100 "${TMP}"; # 0x64 100
+	app_run -u8 -offset 11 -set  33 "${TMP}"; # 0x21 33
+	app_run -u8 -offset 12 -set  10 "${TMP}"; # 0x0A 10
 
 
 	X=$(cat "${TMP}");
@@ -36,7 +55,7 @@ function test1()
 	fi
 
 
-	A=$(./bin/bin_ctl -u8 -offset  0 "${TMP}");
+	A=$(app_run -u8 -offset  0 "${TMP}");
 
 	if [ "${A}" != "0x48" ];
 	then
@@ -132,7 +151,7 @@ function check_prog()
 	done
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-if [ ! -e ./bin/bin_ctl ];
+if [ ! -e "${APP}" ];
 then
 	echo "ERROR: make it";
 	exit 1;
