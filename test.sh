@@ -3,19 +3,33 @@
 APP='./bin/bin_ctl';
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # run app
-function app_run()
+function run_app()
 {
+	STDIN=$(cat);
+
+
 	if [ "${FLAG_VALGRIND}" != "1" ];
 	then
-		echo -n $(${APP} ${@});
+		if [ "${STDIN}" != "" ];
+		then
+			STDOUT=$(echo "${STDIN}" | ${APP} "${@}");
+		else
+			STDOUT=$(${APP} "${@}");
+		fi
 	else
 		VAL="valgrind --tool=memcheck --leak-check=yes --leak-check=full --show-reachable=yes --log-file=valgrind.log";
 
-		echo -n $(${VAL} ${APP} ${@});
+		STDOUT=$(echo "${STDIN}" | ${VAL} ${APP} "${@}");
 
 		echo '--------------------------' >> valgrind.all.log;
 		cat valgrind.log >> valgrind.all.log;
 		rm -rf valgrind.log;
+	fi
+
+
+	if [ "${STDOUT}" != "" ];
+	then
+		echo -n "${STDOUT}";
 	fi
 }
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -30,19 +44,19 @@ function test1()
 # H  e  l  l  o     w  o  r  l  d  ! \n
 #48 65 6C 6C 6F 20 77 6F 72 6C 64 21 0A
 
-	app_run -u8 -offset  0 -set  72 "${TMP}"; # 0x48 72
-	app_run -u8 -offset  1 -set 101 "${TMP}"; # 0x65 101
-	app_run -u8 -offset  2 -set 108 "${TMP}"; # 0x6C 108
-	app_run -u8 -offset  3 -set 108 "${TMP}"; # 0x6C 108
-	app_run -u8 -offset  4 -set 111 "${TMP}"; # 0x6F 111
-	app_run -u8 -offset  5 -set  32 "${TMP}"; # 0x20 32
-	app_run -u8 -offset  6 -set 119 "${TMP}"; # 0x77 119
-	app_run -u8 -offset  7 -set 111 "${TMP}"; # 0x6F 111
-	app_run -u8 -offset  8 -set 114 "${TMP}"; # 0x72 114
-	app_run -u8 -offset  9 -set 108 "${TMP}"; # 0x6C 108
-	app_run -u8 -offset 10 -set 100 "${TMP}"; # 0x64 100
-	app_run -u8 -offset 11 -set  33 "${TMP}"; # 0x21 33
-	app_run -u8 -offset 12 -set  10 "${TMP}"; # 0x0A 10
+	run_app -u8 -offset  0 -set  72 "${TMP}" < /dev/null; # 0x48 72
+	run_app -u8 -offset  1 -set 101 "${TMP}" < /dev/null; # 0x65 101
+	run_app -u8 -offset  2 -set 108 "${TMP}" < /dev/null; # 0x6C 108
+	run_app -u8 -offset  3 -set 108 "${TMP}" < /dev/null; # 0x6C 108
+	run_app -u8 -offset  4 -set 111 "${TMP}" < /dev/null; # 0x6F 111
+	run_app -u8 -offset  5 -set  32 "${TMP}" < /dev/null; # 0x20 32
+	run_app -u8 -offset  6 -set 119 "${TMP}" < /dev/null; # 0x77 119
+	run_app -u8 -offset  7 -set 111 "${TMP}" < /dev/null; # 0x6F 111
+	run_app -u8 -offset  8 -set 114 "${TMP}" < /dev/null; # 0x72 114
+	run_app -u8 -offset  9 -set 108 "${TMP}" < /dev/null; # 0x6C 108
+	run_app -u8 -offset 10 -set 100 "${TMP}" < /dev/null; # 0x64 100
+	run_app -u8 -offset 11 -set  33 "${TMP}" < /dev/null; # 0x21 33
+	run_app -u8 -offset 12 -set  10 "${TMP}" < /dev/null; # 0x0A 10
 
 
 	X=$(cat "${TMP}");
@@ -55,7 +69,7 @@ function test1()
 	fi
 
 
-	A=$(app_run -u8 -offset  0 "${TMP}");
+	A=$(run_app -u8 -offset  0 "${TMP}" < /dev/null);
 
 	if [ "${A}" != "0x48" ];
 	then
