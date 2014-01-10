@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string>
 #include <string.h>
-#include "submodule/lib_cpp/lib_cpp.h"
+#include "submodule/lib_cpp/lib_cpp.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // global vars
 namespace global
@@ -61,6 +61,7 @@ int xget(const char *filename, void *p, uint8_t size)
 {
 	if (lib_cpp::file_get(filename, global::offset, p, size) == -1)
 	{
+		printf("ERROR[lib_cpp::file_get()]: %s\n", strerror(errno));
 		return -1;
 	}
 	view_val(p, size, global::flag_le);
@@ -73,6 +74,7 @@ int xset(const char *filename, const void *p, uint8_t size)
 {
 	if (lib_cpp::file_set(filename, global::offset, p, size) == -1)
 	{
+		printf("ERROR[lib_cpp::file_set()]: %s\n", strerror(errno));
 		return -1;
 	}
 //	view_val(p, size, global::flag_le);
