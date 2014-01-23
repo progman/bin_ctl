@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 
-			if (lib_cpp::str2uint64_t(global::data, 0, argv[i]) == false)
+			if (lib_cpp::str2uint(global::data, 0, argv[i]) == false)
 			{
 				printf("ERROR: invalid DATA value\n");
 				return 1;
@@ -331,7 +331,7 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 
-			if (lib_cpp::str2uint64_t(global::offset, 0, argv[i]) == false)
+			if (lib_cpp::str2uint(global::offset, 0, argv[i]) == false)
 			{
 				printf("ERROR: invalid OFFSET value\n");
 				return 1;
