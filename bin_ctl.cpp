@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string>
 #include <string.h>
-#include "submodule/lib_cpp/lib_cpp.hpp"
+#include "submodule/libcore.cpp/libcore.hpp"
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 // global vars
 namespace global
@@ -38,7 +38,7 @@ void view_val(const void *p, uint8_t size, bool flag_le)
 
 	for (uint8_t i=0; i < size; i++)
 	{
-		const char *p = lib_cpp::bin2hex(*pval);
+		const char *p = libcore::bin2hex(*pval);
 
 		if (flag_le == true)
 		{
@@ -59,9 +59,9 @@ void view_val(const void *p, uint8_t size, bool flag_le)
 // get data
 int xget(const char *filename, void *p, uint8_t size)
 {
-	if (lib_cpp::file_get(filename, global::offset, p, size) == -1)
+	if (libcore::file_get(filename, global::offset, p, size) == -1)
 	{
-		printf("ERROR[lib_cpp::file_get()]: %s\n", strerror(errno));
+		printf("ERROR[libcore::file_get()]: %s\n", strerror(errno));
 		return -1;
 	}
 	view_val(p, size, global::flag_le);
@@ -72,9 +72,9 @@ int xget(const char *filename, void *p, uint8_t size)
 // set data
 int xset(const char *filename, const void *p, uint8_t size)
 {
-	if (lib_cpp::file_set(filename, global::offset, p, size) == -1)
+	if (libcore::file_set(filename, global::offset, p, size) == -1)
 	{
-		printf("ERROR[lib_cpp::file_set()]: %s\n", strerror(errno));
+		printf("ERROR[libcore::file_set()]: %s\n", strerror(errno));
 		return -1;
 	}
 //	view_val(p, size, global::flag_le);
@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 
-			if (lib_cpp::str2uint(global::data, 0, argv[i]) == false)
+			if (libcore::str2uint(global::data, 0, argv[i]) == false)
 			{
 				printf("ERROR: invalid DATA value\n");
 				return 1;
@@ -331,7 +331,7 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 
-			if (lib_cpp::str2uint(global::offset, 0, argv[i]) == false)
+			if (libcore::str2uint(global::offset, 0, argv[i]) == false)
 			{
 				printf("ERROR: invalid OFFSET value\n");
 				return 1;
