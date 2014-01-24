@@ -223,7 +223,7 @@ int do_stdinput()
 // view help
 void help()
 {
-	printf("%s\t(%s)\n", PROG_FULL_NAME, PROG_URL);
+	printf("%s    %s\n", PROG_FULL_NAME, PROG_URL);
 	printf("example: %s [-le|-be|-u8|-u16|-u32|-u64|-set DATA] -offset OFFSET [FILE] [--]\n", PROG_NAME);
 	printf("\n");
 
