@@ -36,6 +36,11 @@ function run_app()
 function test1()
 {
 	TMP="$(mktemp)";
+	if [ "${?}" != "0" ];
+	then
+		echo "can't make tmp file";
+		exit 1;
+	fi
 
 
 	cat /dev/zero | head -c 13 > "${TMP}";
@@ -85,7 +90,18 @@ function test1()
 function test2()
 {
 	TMP1="$(mktemp)";
+	if [ "${?}" != "0" ];
+	then
+		echo "can't make tmp file";
+		exit 1;
+	fi
+
 	TMP2="$(mktemp)";
+	if [ "${?}" != "0" ];
+	then
+		echo "can't make tmp file";
+		exit 1;
+	fi
 
 	echo "Hello world!" > "${TMP1}";
 
@@ -127,6 +143,11 @@ function test2()
 function test3()
 {
 	TMP1="$(mktemp)";
+	if [ "${?}" != "0" ];
+	then
+		echo "can't make tmp file";
+		exit 1;
+	fi
 
 
 	cat /dev/zero | head -c 65600 > "${TMP1}";
