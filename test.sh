@@ -116,14 +116,14 @@ function test2()
 	for ((i=0; i < SIZE; i++));
 	do
 
-		local VAL=$(./bin/bin_ctl -u8 -offset ${i} "${TMP1}");
+		local VAL=$(run_app -u8 -offset ${i} "${TMP1}" < /dev/null);
 
 		if [ "${FLAG_DEBUG}" != "" ];
 		then
 			echo "VAL:${VAL}";
 		fi
 
-		./bin/bin_ctl -u8 -offset ${i} -set ${VAL} "${TMP2}";
+		run_app -u8 -offset ${i} -set ${VAL} "${TMP2}" < /dev/null &> /dev/null;
 
 	done
 
@@ -158,9 +158,9 @@ function test3()
 
 	local A='0xed';
 
-	./bin/bin_ctl -u8 -offset 65534 -set "${A}" "${TMP1}";
+	run_app -u8 -offset 65534 -set "${A}" "${TMP1}" < /dev/null &> /dev/null;
 
-	local B=$(./bin/bin_ctl -u8 -offset 0xfffe "${TMP1}");
+	local B=$(run_app -u8 -offset 0xfffe "${TMP1}" < /dev/null);
 
 	if [ "${A}" != "${B}" ];
 	then
