@@ -35,6 +35,7 @@ function run_app()
 # test1
 function test1()
 {
+	local TMP;
 	TMP="$(mktemp)";
 	if [ "${?}" != "0" ];
 	then
@@ -63,7 +64,7 @@ function test1()
 	run_app -u8 -offset 12 -set  10 "${TMP}" < /dev/null; # 0x0A 10
 
 
-	X=$(cat "${TMP}");
+	local X=$(cat "${TMP}");
 
 	if [ "${X}" != "Hello world!" ];
 	then
@@ -73,7 +74,7 @@ function test1()
 	fi
 
 
-	A=$(run_app -u8 -offset  0 "${TMP}" < /dev/null);
+	local A=$(run_app -u8 -offset  0 "${TMP}" < /dev/null);
 
 	if [ "${A}" != "0x48" ];
 	then
@@ -89,6 +90,7 @@ function test1()
 # test2
 function test2()
 {
+	local TMP1;
 	TMP1="$(mktemp)";
 	if [ "${?}" != "0" ];
 	then
@@ -96,6 +98,7 @@ function test2()
 		exit 1;
 	fi
 
+	local TMP2;
 	TMP2="$(mktemp)";
 	if [ "${?}" != "0" ];
 	then
@@ -105,7 +108,7 @@ function test2()
 
 	echo "Hello world!" > "${TMP1}";
 
-	SIZE=$(stat --format '%s' "${TMP1}");
+	local SIZE=$(stat --format '%s' "${TMP1}");
 
 	cat /dev/zero | head -c "${SIZE}" > "${TMP2}";
 
@@ -113,7 +116,7 @@ function test2()
 	for ((i=0; i < SIZE; i++));
 	do
 
-		VAL=$(./bin/bin_ctl -u8 -offset ${i} "${TMP1}");
+		local VAL=$(./bin/bin_ctl -u8 -offset ${i} "${TMP1}");
 
 		if [ "${FLAG_DEBUG}" != "" ];
 		then
@@ -125,7 +128,7 @@ function test2()
 	done
 
 
-	X=$(cat "${TMP2}");
+	local X=$(cat "${TMP2}");
 
 	if [ "${X}" != "Hello world!" ];
 	then
@@ -142,6 +145,7 @@ function test2()
 # test3
 function test3()
 {
+	local TMP1;
 	TMP1="$(mktemp)";
 	if [ "${?}" != "0" ];
 	then
@@ -152,11 +156,11 @@ function test3()
 
 	cat /dev/zero | head -c 65600 > "${TMP1}";
 
-	A='0xed';
+	local A='0xed';
 
 	./bin/bin_ctl -u8 -offset 65534 -set "${A}" "${TMP1}";
 
-	B=$(./bin/bin_ctl -u8 -offset 0xfffe "${TMP1}");
+	local B=$(./bin/bin_ctl -u8 -offset 0xfffe "${TMP1}");
 
 	if [ "${A}" != "${B}" ];
 	then
