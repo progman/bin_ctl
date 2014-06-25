@@ -9,7 +9,7 @@ PROG_TYPE           := exe
 
 OUT_DIR             := bin
 C_LIST              :=
-CPP_LIST            := bin_ctl.cpp submodule/libcore.cpp/libcore.cpp
+CPP_LIST            := submodule/libcore.cpp/libcore.cpp bin_ctl.cpp
 HEADER_LIST         := submodule/libcore.cpp/libcore.hpp
 
 CFLAGS              :=
