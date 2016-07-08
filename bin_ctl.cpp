@@ -72,7 +72,7 @@ int xget(const char *filename, void *p, uint8_t size)
 // set data
 int xset(const char *filename, const void *p, uint8_t size)
 {
-	if (libcore::file_set(filename, global::offset, p, size) == -1)
+	if (libcore::file_set(filename, global::offset, p, size, false, false, false) == -1)
 	{
 		printf("ERROR[libcore::file_set()]: %s\n", strerror(errno));
 		return -1;
